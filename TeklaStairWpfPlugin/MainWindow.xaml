@@ -1,0 +1,240 @@
+﻿<tsd:PluginWindowBase
+    x:Class="TeklaStairWpfPlugin.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:UIControls="clr-namespace:Tekla.Structures.Dialog.UIControls;assembly=Tekla.Structures.Dialog"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:TeklaStairWpfPlugin"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tsd="clr-namespace:Tekla.Structures.Dialog;assembly=Tekla.Structures.Dialog"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Лестница 1.450"
+    Height="500" Width="800" ResizeMode="NoResize"
+    HorizontalAlignment="Stretch"
+    mc:Ignorable="d">
+    <FrameworkElement.Resources>
+        <ResourceDictionary>
+            <local:EmptyStringConverter x:Key="StringEmptyConverter"/>
+            <local:MinValueConverter x:Key="ValueMinConverver" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </FrameworkElement.Resources>
+    <d:UserControl.DataContext>
+        <local:MainWindowViewModel />
+    </d:UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="24" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="24" />
+        </Grid.RowDefinitions>
+        <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}" Grid.Row="0" FontSize="8" FontFamily="Calibri">
+            <UIControls:WpfSaveLoad
+            Grid.Row="0"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"/>
+        </materialDesign:Card>
+        
+        <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}" Grid.Row="1">
+            <ScrollViewer >
+                <StackPanel>
+                    <Expander HorizontalAlignment="Stretch" Header="Лестницы" FontSize="16" FontFamily="Calibri" FontWeight="Bold">
+                        <TabControl Style="{StaticResource MaterialDesignNavigatilRailTabControl}" MinHeight="250" SelectedIndex="{Binding StairTypeIndex, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='1'}">
+                            <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="1" Height="1" Visibility="Collapsed" />
+                            <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Height="100">
+                                <TabItem.Header>
+                                    <Image Source="Images/Type12_256p.png" Height="74" Width="70" />
+                                </TabItem.Header>
+                                <Grid>
+                                    <Image Source="Images/Type16_backOff.png" Margin="21,0,356.6,5.6"/>
+                                    <TextBox HorizontalAlignment="Left" Height="30" Margin="42,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.5,0.5" 
+                                             FontSize="14" FontFamily="Calibri" FontWeight="Bold"
+                                             Text="{Binding StairOffset, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='1000'}">
+                                        <TextBox.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform AngleX="-0.062"/>
+                                                <RotateTransform Angle="12.793"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox HorizontalAlignment="Left" Height="30" Margin="234,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="59" RenderTransformOrigin="0.5,0.5" 
+                                             FontSize="14" FontFamily="Calibri" FontWeight="Bold"
+                                             Text="{Binding StairWidth, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='700'}" >
+                                        <TextBox.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform AngleX="0.049"/>
+                                                <RotateTransform Angle="-10.12"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <ComboBox HorizontalAlignment="Left" Margin="118,186,0,0" VerticalAlignment="Top" Width="40" Height="30" FontSize="14" FontWeight="Bold" FontFamily="Calibri" SelectedIndex="{Binding AngleOfStairIndex, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='0'}">
+                                        <ComboBoxItem IsSelected="True">45</ComboBoxItem>
+                                        <ComboBoxItem>60</ComboBoxItem>
+                                    </ComboBox>
+
+                                    <Label Content="Профиль" HorizontalAlignment="Left" Margin="287,69,0,0" VerticalAlignment="Top" Width="73" FontSize="14" FontFamily="Calibri" FontWeight="Bold"/>
+                                    <Label Content="Материал" HorizontalAlignment="Left" Margin="287,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.31,0.398" Width="73" FontSize="14" FontFamily="Calibri" FontWeight="Bold"/>
+                                    <UIControls:WpfFilterCheckBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="365,77,0,0" AttributeName="stringerProfile" />
+                                    <TextBox x:Name="txtBox_ProfileStringers" Width="120" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                            Text="{Binding StringerProfile, Mode=TwoWay, Converter={StaticResource StringEmptyConverter}, ConverterParameter='U16P_8240_97'}"
+                                            TextWrapping="Wrap" Margin="385,65,0,0" FontSize="14" />
+                                    <UIControls:WpfProfileCatalog x:Name="prflStringerCatalog" VerticalAlignment="Top" HorizontalAlignment="Left" SelectClicked="prflStringerCatalog_SelectClicked"
+                                            SelectionDone="prflStringerCatalog_SelectionDone" Margin="520,70,0,0" RenderTransformOrigin="0.604,-1.527" />
+                                    <UIControls:WpfFilterCheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="365,106,0,0" AttributeName="stringerMaterial" />
+                                    <TextBox x:Name="txtBox_MaterialStringers" Width="120" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="385,95,0,0"
+                                             Text="{Binding StringerMaterial, Mode=TwoWay, Converter={StaticResource StringEmptyConverter}, ConverterParameter='C245-4'}" TextWrapping="Wrap" FontSize="14" />
+                                    <UIControls:WpfMaterialCatalog x:Name="mtrlStringersCatalog" VerticalAlignment="Top" BorderThickness="0" FontSize="6" HorizontalAlignment="Left" Margin="520,105,0,0"
+                                            SelectClicked="mtrlStringersCatalog_SelectClicked"
+                                            SelectionDone="mtrlStringersCatalog_SelectionDone" />
+
+                                </Grid>
+
+                            </TabItem>
+                            <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Height="100">
+                                <TabItem.Header>
+                                    <Image Source="Images/Type21_256.png" Height="74" Width="70"/>
+                                </TabItem.Header>
+                                <Grid >
+                                    <Image Source="Images/Type2_backOff.png" HorizontalAlignment="Left" Height="230" Margin="65,10,0,0" VerticalAlignment="Top" Width="295"/>
+                                    <TextBox HorizontalAlignment="Left" Height="28" Margin="207,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.5,0.5"
+                                             FontSize="14" FontFamily="Calibri" FontWeight="Bold" 
+                                             Text="{Binding StairWidth, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='700'}">
+                                        <TextBox.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform/>
+                                                <RotateTransform Angle="-10.373"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <ComboBox HorizontalAlignment="Left" Margin="76,168,0,0" VerticalAlignment="Top" Width="40" Height="30" FontSize="14" FontFamily="Calibri" FontWeight="Bold" SelectedIndex="{Binding AngleOfStairIndex, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='0'}">
+                                        <ComboBoxItem IsSelected="True">45</ComboBoxItem>
+                                        <ComboBoxItem>60</ComboBoxItem>
+                                    </ComboBox>
+
+                                    <Label Content="Профиль" HorizontalAlignment="Left" Margin="287,69,0,0" VerticalAlignment="Top" Width="73" FontSize="14" FontFamily="Calibri" FontWeight="Bold"/>
+                                    <Label Content="Материал" HorizontalAlignment="Left" Margin="287,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.31,0.398" Width="73" FontSize="14" FontFamily="Calibri" FontWeight="Bold"/>
+                                    <UIControls:WpfFilterCheckBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="365,77,0,0" AttributeName="stringerProfile" />
+                                    <TextBox x:Name="textBox_ProfileStringers" Width="120" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                            Text="{Binding StringerProfile, Mode=TwoWay, Converter={StaticResource StringEmptyConverter}, ConverterParameter='U16P_8240_97'}"
+                                            TextWrapping="Wrap" Margin="385,65,0,0" FontSize="14" />
+                                    <UIControls:WpfProfileCatalog x:Name="profileStringerCatalog" VerticalAlignment="Top" HorizontalAlignment="Left" SelectClicked="profileStringerCatalog_SelectClicked"
+                                            SelectionDone="profileStringerCatalog_SelectionDone" Margin="520,71,0,0" RenderTransformOrigin="0.604,-1.527" />
+                                    <UIControls:WpfFilterCheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="365,106,0,0" AttributeName="stringerMaterial" />
+                                    <TextBox x:Name="textBox_MaterialStringers" Width="120" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="385,95,0,0"
+                                             Text="{Binding StringerMaterial, Mode=TwoWay, Converter={StaticResource StringEmptyConverter}, ConverterParameter='C245-4'}" TextWrapping="Wrap" FontSize="14" />
+                                    <UIControls:WpfMaterialCatalog x:Name="materialStringersCatalog" VerticalAlignment="Top" BorderThickness="0" FontSize="6" HorizontalAlignment="Left" Margin="520,106,0,0"
+                                            SelectClicked="materialStringersCatalog_SelectClicked"
+                                            SelectionDone="materialStringersCatalog_SelectionDone" />
+                                </Grid>
+
+                            </TabItem>
+                            <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}" Width="100" Height="100">
+                                <TabItem.Header>
+                                    <Image Source="Images/Type31_256p.png" Height="74" Width="70" />
+                                </TabItem.Header>
+                                <Grid>
+                                    <Image Source="Images/Type3_backOff.png" HorizontalAlignment="Left" Height="230" Margin="45,30,0,0" VerticalAlignment="Top" Width="295"/>
+                                    <TextBox HorizontalAlignment="Left" Height="28" Margin="247,215,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" RenderTransformOrigin="0.5,0.5"
+                                             FontSize="14" FontFamily="Calibri" FontWeight="Bold"
+                                             Text="{Binding StairWidth, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='700'}">
+                                        <TextBox.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform/>
+                                                <RotateTransform Angle="-16.192"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <TextBox HorizontalAlignment="Left" Height="28" Margin="60,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" FontSize="14" FontFamily="Calibri" FontWeight="Bold"
+                                             RenderTransformOrigin="0.5,0.5" Text="{Binding StairOffset, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='1000' }">
+                                        <TextBox.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform/>
+                                                <RotateTransform Angle="14.52"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </TextBox.RenderTransform>
+                                    </TextBox>
+                                    <ComboBox materialDesign:HintAssist.Hint="OS" HorizontalAlignment="Left" Margin="107,177,0,0" VerticalAlignment="Top" Width="40" Height="30"
+                                              FontSize="14" FontFamily="Calibri" FontWeight="Bold"
+                                              SelectedIndex="{Binding AngleOfStairIndex, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='0'}" >
+                                        <ComboBoxItem IsSelected="True">45</ComboBoxItem>
+                                        <ComboBoxItem>60</ComboBoxItem>
+                                    </ComboBox>
+
+                                    <Label Content="Профиль" HorizontalAlignment="Left" Margin="287,69,0,0" VerticalAlignment="Top" Width="67" FontSize="14" FontFamily="Calibri" FontWeight="Bold"/>
+                                    <Label Content="Материал" HorizontalAlignment="Left" Margin="287,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.31,0.398" Width="68" FontSize="14" FontFamily="Calibri" FontWeight="Bold"/>
+                                    <UIControls:WpfFilterCheckBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="365,77,0,0" AttributeName="stringerProfile" />
+                                    <TextBox x:Name="txtBox_ProfileStringersExt" Width="120" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                            Text="{Binding StringerProfile, Mode=TwoWay, Converter={StaticResource StringEmptyConverter}, ConverterParameter='U16P_8240_97'}"
+                                            TextWrapping="Wrap" Margin="385,65,0,0" FontSize="14" FontFamily="Calibri" FontWeight="Bold" />
+                                    <UIControls:WpfProfileCatalog x:Name="profileStringerCatalogExt" VerticalAlignment="Top" HorizontalAlignment="Left" SelectClicked="profileStringerCatalogExt_SelectClicked"
+                                            SelectionDone="profileStringerCatalogExt_SelectionDone" Margin="520,71,0,0" RenderTransformOrigin="0.604,-1.527" />
+                                    <UIControls:WpfFilterCheckBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="365,106,0,0" AttributeName="stringerMaterial" />
+                                    <TextBox x:Name="textBox_MaterialStringersExt" Width="120" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="385,95,0,0"
+                                             Text="{Binding StringerMaterial, Mode=TwoWay, Converter={StaticResource StringEmptyConverter}, ConverterParameter='C245-4'}" 
+                                             TextWrapping="Wrap" FontSize="14" FontFamily="Calibri" FontWeight="Bold" />
+                                    <UIControls:WpfMaterialCatalog x:Name="materialStringersCatalogExt" VerticalAlignment="Top" BorderThickness="0" FontSize="6" HorizontalAlignment="Left" Margin="520,106,0,0"
+                                            SelectClicked="materialStringersCatalogExt_SelectClicked"
+                                            SelectionDone="materialStringersCatalogExt_SelectionDone" />
+                                </Grid>
+
+                            </TabItem>
+                        </TabControl>
+                    </Expander>
+                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="1"  HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                    <Expander HorizontalAlignment="Stretch" Header="Ступени" FontSize="20" FontFamily="Calibri" FontWeight="Bold">
+                        <ListBox Style="{StaticResource MaterialDesignToolVerticalToggleListBox}" SelectedIndex="{Binding StepTypeIndex, Mode=TwoWay, Converter={StaticResource ValueMinConverver}, ConverterParameter='0'}">
+                            <ListBoxItem>
+                                <Image Source="Images/StepType1_256p.png" Width="96" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <Image Source="Images/StepType2_256p.png" Width="96"/>
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <Image Source="Images/StepType3_256p.png" Width="96"/>
+                            </ListBoxItem>
+                        </ListBox>
+                    </Expander>
+                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                    <Expander HorizontalAlignment="Stretch" Header="Ограждения" FontSize="16" FontWeight="Bold" FontFamily="Calibri">
+                        <StackPanel Orientation="Vertical" Margin="4">
+                            <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True" Content="СЛЕВА" />
+                            <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="СПРАВА" />
+                            <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="ВСЕ" />
+                        </StackPanel>
+                    </Expander>
+                   
+                </StackPanel>
+            </ScrollViewer>
+        </materialDesign:Card>
+
+        <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}" Grid.Row="2" FontSize="8" FontFamily="Calibri">
+            <UIControls:WpfOkApplyModifyGetOnOffCancel
+            ApplyClicked="WPFOkApplyModifyGetOnOffCancel_ApplyClicked"
+            CancelClicked="WPFOkApplyModifyGetOnOffCancel_CancelClicked"
+            GetClicked="WPFOkApplyModifyGetOnOffCancel_GetClicked"
+            ModifyClicked="WPFOkApplyModifyGetOnOffCancel_ModifyClicked"
+            OkClicked="WPFOkApplyModifyGetOnOffCancel_OkClicked"
+            OnOffClicked="WPFOkApplyModifyGetOnOffCancel_OnOffClicked" />
+        </materialDesign:Card>
+
+    </Grid>
+</tsd:PluginWindowBase>
